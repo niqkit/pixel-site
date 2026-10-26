@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="Python для школьников">
+  <defs>
+    <linearGradient id="bgp" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#1e3a8a"/>
+    </linearGradient>
+    <linearGradient id="snakeblue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#306998"/>
+      <stop offset="1" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="snakeyellow" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffd43b"/>
+      <stop offset="1" stop-color="#fbbf24"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#bgp)"/>
+
+  <!-- Кодовая сетка на фоне -->
+  <g opacity="0.18" font-family="monospace" font-size="22" fill="#60a5fa">
+    <text x="40" y="70">def hello():</text>
+    <text x="70" y="105">print("Привет!")</text>
+    <text x="40" y="140">for i in range(5):</text>
+    <text x="70" y="175">print(i * i)</text>
+    <text x="40" y="380">x = [i**2 for i in range(10)]</text>
+    <text x="40" y="420">if user.code > 0:</text>
+    <text x="70" y="455">deploy()</text>
+  </g>
+
+  <!-- Звездочки -->
+  <g fill="#ffffff" opacity="0.5">
+    <circle cx="700" cy="60" r="4"/>
+    <circle cx="620" cy="120" r="3"/>
+    <circle cx="730" cy="300" r="4"/>
+    <circle cx="660" cy="420" r="3"/>
+    <circle cx="540" cy="250" r="3"/>
+  </g>
+
+  <!-- Логотип Python: две змеи -->
+  <g transform="translate(400,250)">
+    <!-- Голубая змея -->
+    <path d="M-10,-170 C-120,-170 -130,-70 -90,-50 C-40,-25 80,-110 90,10
+             C100,120 -40,130 -30,60 C-24,20 40,40 40,-10
+             C40,-80 -60,-70 -90,10 C-120,90 -50,150 -30,150
+             C-15,150 -5,130 -20,120"
+          fill="none" stroke="url(#snakeblue)" stroke-width="52" stroke-linecap="round"/>
+    <!-- Жёлтая змея -->
+    <path d="M10,-170 C120,-170 130,-70 90,-50 C40,-25 -80,-110 -90,10
+             C-100,120 40,130 30,60 C24,20 -40,40 -40,-10
+             C-40,-80 60,-70 90,10 C120,90 50,150 30,150
+             C15,150 5,130 20,120"
+          fill="none" stroke="url(#snakeyellow)" stroke-width="52" stroke-linecap="round"/>
+    <!-- Глаза -->
+    <circle cx="-46" cy="-132" r="12" fill="#ffffff"/>
+    <circle cx="-44" cy="-134" r="6" fill="#0f172a"/>
+    <circle cx="46" cy="-132" r="12" fill="#ffffff"/>
+    <circle cx="44" cy="-134" r="6" fill="#0f172a"/>
+  </g>
+
+  <text x="400" y="462" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="800" fill="#ffffff" letter-spacing="1">Python · Настоящий код</text>
+</svg>
