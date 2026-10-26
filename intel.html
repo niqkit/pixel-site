@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Пиксель — школа программирования для детей</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --blue: #2563eb;
+      --blue-dark: #1d4ed8;
+      --yellow: #facc15;
+      --orange: #f97316;
+      --white: #ffffff;
+      --bg: #f8fafc;
+      --text: #1e293b;
+      --text-light: #64748b;
+      --gray: #e2e8f0;
+      --radius: 16px;
+      --shadow: 0 4px 20px rgba(0,0,0,0.08);
+      --shadow-hover: 0 8px 30px rgba(37,99,235,0.2);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.6;
+    }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+    /* Header */
+    header {
+      position: sticky; top: 0;
+      background: var(--white);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+      z-index: 100;
+    }
+    .header-inner {
+      display: flex; justify-content: space-between;
+      align-items: center; padding: 16px 0;
+    }
+    .logo { font-size: 24px; font-weight: 800; color: var(--blue); text-decoration: none; }
+    .logo span { color: var(--orange); }
+    nav ul { list-style: none; display: flex; gap: 28px; }
+    nav a {
+      text-decoration: none; color: var(--text);
+      font-weight: 500; transition: color 0.3s; position: relative;
+    }
+    nav a:hover { color: var(--blue); }
+    nav a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 2px; background: var(--orange); transition: width 0.3s;
+    }
+    nav a:hover::after { width: 100%; }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, #dbeafe 0%, #fef3c7 100%);
+      padding: 80px 0 100px; text-align: center;
+    }
+    .hero h1 {
+      font-size: 48px; font-weight: 800; line-height: 1.2;
+      margin-bottom: 20px;
+    }
+    .hero h1 span { color: var(--orange); }
+    .hero p {
+      font-size: 20px; color: var(--text-light);
+      max-width: 600px; margin: 0 auto 36px;
+    }
+
+    .btn {
+      display: inline-block; padding: 16px 40px;
+      background: var(--blue); color: var(--white);
+      border: none; border-radius: 50px;
+      font-size: 17px; font-weight: 600; cursor: pointer;
+      text-decoration: none; transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(37,99,235,0.3);
+    }
+    .btn:hover {
+      background: var(--blue-dark); transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(37,99,235,0.4);
+    }
+    .btn-orange {
+      background: var(--orange);
+      box-shadow: 0 4px 15px rgba(249,115,22,0.3);
+    }
+    .btn-orange:hover {
+      background: #ea580c;
+      box-shadow: 0 8px 25px rgba(249,115,22,0.4);
+    }
+
+    /* Sections */
+    section { padding: 80px 0; }
+    .section-title {
+      text-align: center; font-size: 36px; font-weight: 800; margin-bottom: 16px;
+    }
+    .section-subtitle {
+      text-align: center; color: var(--text-light);
+      font-size: 18px; margin-bottom: 50px;
+    }
+
+    /* About */
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: center;
+    }
+    .about-text h3 { font-size: 26px; margin-bottom: 16px; color: var(--blue); }
+    .about-text p { color: var(--text-light); margin-bottom: 16px; }
+
+    .stats {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px; margin-top: 30px;
+    }
+    .stat {
+      text-align: center; padding: 24px 16px;
+      background: var(--bg); border-radius: var(--radius);
+      transition: transform 0.3s;
+    }
+    .stat:hover { transform: translateY(-5px); }
+    .stat-num { font-size: 32px; font-weight: 800; color: var(--orange); }
+    .stat-label { font-size: 14px; color: var(--text-light); }
+
+    /* Courses */
+    .courses-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 28px;
+    }
+    .course-card {
+      background: var(--white); border: 2px solid var(--gray);
+      border-radius: var(--radius); padding: 32px 24px;
+      transition: all 0.3s; display: flex; flex-direction: column;
+    }
+    .course-card:hover {
+      border-color: var(--blue); transform: translateY(-8px);
+      box-shadow: var(--shadow-hover);
+    }
+    .course-icon { font-size: 48px; margin-bottom: 16px; }
+    .course-card h3 { font-size: 20px; margin-bottom: 12px; }
+    .course-meta { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+    .badge {
+      display: inline-block; padding: 4px 12px;
+      background: #dbeafe; color: var(--blue);
+      border-radius: 20px; font-size: 13px; font-weight: 600;
+    }
+    .badge-orange { background: #ffedd5; color: var(--orange); }
+    .course-card .btn {
+      margin-top: auto; padding: 12px 24px; font-size: 15px;
+      width: 100%; text-align: center;
+    }
+
+    /* Teachers */
+    .teachers-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 28px;
+    }
+    .teacher-card {
+      text-align: center; padding: 32px 20px;
+      background: var(--bg); border-radius: var(--radius);
+      transition: all 0.3s;
+    }
+    .teacher-card:hover {
+      background: var(--white); box-shadow: var(--shadow);
+      transform: translateY(-5px);
+    }
+    .teacher-avatar {
+      width: 100px; height: 100px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--orange));
+      color: var(--white); font-size: 40px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .teacher-card h3 { font-size: 20px; margin-bottom: 8px; }
+    .teacher-spec { color: var(--blue); font-weight: 600; margin-bottom: 8px; }
+    .teacher-exp { color: var(--text-light); font-size: 14px; }
+
+    /* Reviews */
+    .reviews { background: var(--bg); }
+    .reviews-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+    }
+    .review-card {
+      background: var(--white); padding: 28px;
+      border-radius: var(--radius); box-shadow: var(--shadow);
+      transition: transform 0.3s;
+    }
+    .review-card:hover { transform: translateY(-5px); }
+    .review-text { color: var(--text-light); margin-bottom: 20px; font-style: italic; }
+    .review-author { font-weight: 700; color: var(--text); }
+    .review-result {
+      font-size: 14px; color: var(--orange);
+      font-weight: 600; margin-top: 4px;
+    }
+
+    /* Contacts */
+    .contacts-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+    }
+    .contact-info h3 { font-size: 24px; margin-bottom: 24px; }
+    .contact-item {
+      display: flex; align-items: center; gap: 16px; margin-bottom: 20px;
+    }
+    .contact-icon {
+      width: 48px; height: 48px; background: #dbeafe;
+      border-radius: 12px; display: flex; align-items: center;
+      justify-content: center; font-size: 22px; flex-shrink: 0;
+    }
+    .contact-item strong { display: block; }
+    .contact-item span { color: var(--text-light); font-size: 14px; }
+    .socials { display: flex; gap: 12px; margin-top: 24px; }
+    .socials a {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: var(--blue); color: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none; font-weight: 700; transition: all 0.3s;
+    }
+    .socials a:hover { background: var(--orange); transform: translateY(-3px); }
+
+    /* Form */
+    .form {
+      background: var(--bg); padding: 36px; border-radius: var(--radius);
+    }
+    .form h3 { font-size: 22px; margin-bottom: 24px; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label {
+      display: block; margin-bottom: 6px;
+      font-weight: 600; font-size: 14px;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%; padding: 12px 16px;
+      border: 2px solid var(--gray); border-radius: 10px;
+      font-size: 16px; font-family: inherit; transition: border-color 0.3s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none; border-color: var(--blue);
+    }
+    .form .btn { width: 100%; margin-top: 8px; }
+
+    /* Footer */
+    footer {
+      background: #0f172a; color: #cbd5e1;
+      padding: 40px 0; text-align: center;
+    }
+    footer p { font-size: 14px; }
+    footer a { color: var(--yellow); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .about-grid, .contacts-grid {
+        grid-template-columns: 1fr; gap: 40px;
+      }
+      .hero h1 { font-size: 36px; }
+    }
+
+    @media (max-width: 720px) {
+      .header-inner { flex-direction: column; gap: 12px; }
+      nav ul {
+        gap: 16px; flex-wrap: wrap; justify-content: center;
+      }
+      nav a { font-size: 14px; }
+      .hero { padding: 60px 0 70px; }
+      .hero h1 { font-size: 28px; }
+      .hero p { font-size: 16px; }
+      .section-title { font-size: 28px; }
+      section { padding: 60px 0; }
+      .stats { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 400px) {
+      .hero h1 { font-size: 24px; }
+      .btn { padding: 14px 28px; font-size: 15px; }
+      .form { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container header-inner">
+      <a href="#" class="logo">Пиксель<span>.</span></a>
+      <nav>
+        <ul>
+          <li><a href="#about">О школе</a></li>
+          <li><a href="#courses">Курсы</a></li>
+          <li><a href="#teachers">Преподаватели</a></li>
+          <li><a href="#reviews">Отзывы</a></li>
+          <li><a href="#contacts">Контакты</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <h1>Учим детей создавать <span>игры и сайты</span> с 8 лет</h1>
+      <p>Онлайн-школа программирования «Пиксель» — от первого спрайта в Scratch до собственного сайта на Python.</p>
+      <a href="#contacts" class="btn btn-orange">Записаться на бесплатный урок</a>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title">О школе</h2>
+      <p class="section-subtitle">Программирование — это новый английский. Мы учим детей говорить на нём.</p>
+      <div class="about-grid">
+        <div class="about-text">
+          <h3>Наша миссия</h3>
+          <p>Мы верим, что каждый ребёнок способен создавать технологии, а не только потреблять их. В «Пикселе» дети не просто играют в игры — они их придумывают и программируют.</p>
+          <p>Занятия проходят в небольших группах до 8 человек, с живыми преподавателями-практиками из IT-сферы.</p>
+        </div>
+        <div>
+          <div class="stats">
+            <div class="stat">
+              <div class="stat-num">1200+</div>
+              <div class="stat-label">учеников</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">6 лет</div>
+              <div class="stat-label">опыта</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">25+</div>
+              <div class="stat-label">преподавателей</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Courses -->
+  <section id="courses" style="background: var(--bg);">
+    <div class="container">
+      <h2 class="section-title">Курсы</h2>
+      <p class="section-subtitle">Подберём направление под возраст и интересы ребёнка</p>
+      <div class="courses-grid">
+        <div class="course-card">
+          <div class="course-icon">🐱</div>
+          <h3>Scratch для малышей</h3>
+          <div class="course-meta">
+            <span class="badge">8–10 лет</span>
+            <span class="badge badge-orange">3 месяца</span>
+          </div>
+          <p style="color: var(--text-light); margin-bottom: 20px;">Первые шаги в программировании через создание мультиков и игр.</p>
+          <a href="#contacts" class="btn">Подробнее о курсе</a>
+        </div>
+
+        <div class="course-card">
+          <div class="course-icon">🐍</div>
+          <h3>Python для школьников</h3>
+          <div class="course-meta">
+            <span class="badge">11–14 лет</span>
+            <span class="badge badge-orange">6 месяцев</span>
+          </div>
+          <p style="color: var(--text-light); margin-bottom: 20px;">Настоящий язык программирования: от основ до собственных проектов.</p>
+          <a href="#contacts" class="btn">Подробнее о курсе</a>
+        </div>
+
+        <div class="course-card">
+          <div class="course-icon">🎮</div>
+          <h3>Разработка игр в Roblox</h3>
+          <div class="course-meta">
+            <span class="badge">10–15 лет</span>
+            <span class="badge badge-orange">4 месяца</span>
+          </div>
+          <p style="color: var(--text-light); margin-bottom: 20px;">Создаём собственные игры в Roblox Studio на языке Lua.</p>
+          <a href="#contacts" class="btn">Подробнее о курсе</a>
+        </div>
+
+        <div class="course-card">
+          <div class="course-icon">🌐</div>
+          <h3>Создание сайтов</h3>
+          <div class="course-meta">
+            <span class="badge">12–16 лет</span>
+            <span class="badge badge-orange">5 месяцев</span>
+          </div>
+          <p style="color: var(--text-light); margin-bottom: 20px;">HTML, CSS и JavaScript — от макета до опубликованного сайта.</p>
+          <a href="#contacts" class="btn">Подробнее о курсе</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Teachers -->
+  <section id="teachers">
+    <div class="container">
+      <h2 class="section-title">Преподаватели</h2>
+      <p class="section-subtitle">Практики из IT-сферы, которые умеют объяснять просто</p>
+      <div class="teachers-grid">
+        <div class="teacher-card">
+          <div class="teacher-avatar">А</div>
+          <h3>Алексей Морозов</h3>
+          <div class="teacher-spec">Python, backend</div>
+          <div class="teacher-exp">7 лет в разработке, преподаватель с 2019 года</div>
+        </div>
+        <div class="teacher-card">
+          <div class="teacher-avatar">М</div>
+          <h3>Мария Соколова</h3>
+          <div class="teacher-spec">Scratch, Roblox</div>
+          <div class="teacher-exp">5 лет работы с детьми, автор курса «Игры в Roblox»</div>
+        </div>
+        <div class="teacher-card">
+          <div class="teacher-avatar">Д</div>
+          <h3>Дмитрий Волков</h3>
+          <div class="teacher-spec">Frontend, HTML/CSS</div>
+          <div class="teacher-exp">6 лет в веб-разработке, ведёт курс «Создание сайтов»</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section id="reviews" class="reviews">
+    <div class="container">
+      <h2 class="section-title">Отзывы родителей</h2>
+      <p class="section-subtitle">Что говорят о нас те, кто уже учится в «Пикселе»</p>
+      <div class="reviews-grid">
+        <div class="review-card">
+          <p class="review-text">«Сын раньше только играл в Roblox, а теперь сам делает игры и показывает друзьям. Записался на второй курс».</p>
+          <div class="review-author">Елена К.</div>
+          <div class="review-result">Мама Максима, 11 лет</div>
+        </div>
+        <div class="review-card">
+          <p class="review-text">«Дочка в 9 лет сделала первый мультик в Scratch и была в восторге. Преподаватели терпеливые, объясняют понятно».</p>
+          <div class="review-author">Ольга Р.</div>
+          <div class="review-result">Мама Софии, 9 лет</div>
+        </div>
+        <div class="review-card">
+          <p class="review-text">«Ходим на Python уже полгода. Ребёнок сам написал программу для учёта карманных денег — я была в шоке».</p>
+          <div class="review-author">Игорь Т.</div>
+          <div class="review-result">Папа Артёма, 13 лет</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contacts -->
+  <section id="contacts">
+    <div class="container">
+      <h2 class="section-title">Контакты</h2>
+      <p class="section-subtitle">Запишитесь на бесплатный пробный урок — покажем, как всё устроено</p>
+      <div class="contacts-grid">
+        <div class="contact-info">
+          <h3>Свяжитесь с нами</h3>
+          <div class="contact-item">
+            <div class="contact-icon">📞</div>
+            <div>
+              <strong>+7 (495) 123-45-67</strong>
+              <span>Ежедневно с 10:00 до 20:00</span>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">✉️</div>
+            <div>
+              <strong>hello@pixel-school.ru</strong>
+              <span>Ответим в течение дня</span>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div>
+              <strong>Москва, ул. Тверская, 15</strong>
+              <span>Офис 302 (онлайн — из любого города)</span>
+            </div>
+          </div>
+          <div class="socials">
+            <a href="#" title="Telegram">T</a>
+            <a href="#" title="VK">VK</a>
+            <a href="#" title="YouTube">YT</a>
+          </div>
+        </div>
+
+        <form class="form">
+          <h3>Записаться на пробный урок</h3>
+          <div class="form-group">
+            <label for="name">Ваше имя</label>
+            <input type="text" id="name" placeholder="Например, Анна" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Телефон</label>
+            <input type="tel" id="phone" placeholder="+7 (___) ___-__-__" required>
+          </div>
+          <div class="form-group">
+            <label for="age">Возраст ребёнка</label>
+            <input type="number" id="age" min="7" max="17" placeholder="Например, 10" required>
+          </div>
+          <button type="submit" class="btn btn-orange">Записаться на бесплатный урок</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>© 2026 Школа программирования «Пиксель». Все права защищены.</p>
+      <p style="margin-top: 8px;">
+        <a href="#">Политика конфиденциальности</a> · 
+        <a href="#">Согласие на обработку данных</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
